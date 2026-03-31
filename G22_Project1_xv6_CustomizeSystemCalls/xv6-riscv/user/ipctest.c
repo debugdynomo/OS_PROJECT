@@ -16,11 +16,13 @@ int main() {
         printf("Child exiting\n");
     } else {
         // PARENT
+		sleep(5);
         printf("Parent started (PID: %d)\n", getpid());
 
         for(int i = 1; i <= 5; i++) {
             printf("Parent sending: %d\n", i * 10);
             send(i * 10);
+			sleep(5);
         }
 
         wait(0);  // wait for child
