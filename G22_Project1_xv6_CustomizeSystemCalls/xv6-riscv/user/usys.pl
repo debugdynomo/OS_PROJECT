@@ -43,4 +43,4 @@ entry("sbrk");
 entry("pause");
 entry("uptime");
 entry("send");
-enrty("recv");
+entry("recv");

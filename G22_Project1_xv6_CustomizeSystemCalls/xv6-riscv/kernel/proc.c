@@ -12,11 +12,7 @@ struct proc proc[NPROC];
 
 struct proc *initproc;
 
-struct {
-	int value;
-	int full;
-	struct spinlock lock;
-} msgbox;
+struct msgbox msgbox;
 
 int nextpid = 1;
 struct spinlock pid_lock;
