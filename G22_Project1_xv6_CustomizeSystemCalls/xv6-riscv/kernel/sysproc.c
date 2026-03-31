@@ -136,6 +136,24 @@ sys_recv(void)
 	return val;
 }
 
+uint64
+sys_sleep(void)
+{
+	int n;
+	argint(0,&n);
+
+	acquire(&tickslock);
+	uint ticks0 = ticks;
+
+	while(ticks - ticks0 < n) {
+		sleep(&ticks,&tickslock);
+	}
+
+	release(&tickslock);
+
+	return 0;
+}
+
 // return how many clock tick interrupts have occurred
 // since start.
 uint64

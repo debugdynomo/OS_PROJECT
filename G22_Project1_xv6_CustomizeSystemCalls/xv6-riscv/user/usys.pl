@@ -44,3 +44,4 @@ entry("pause");
 entry("uptime");
 entry("send");
 entry("recv");
+entry("sleep");

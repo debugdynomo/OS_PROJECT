@@ -26,6 +26,7 @@ int pause(int);
 int uptime(void);
 int send(int);
 int recv(void);
+int sleep(int);
 
 // ulib.c
 int stat(const char*, struct stat*);

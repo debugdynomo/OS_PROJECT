@@ -22,3 +22,4 @@
 #define SYS_close  21
 #define SYS_send   26
 #define SYS_recv   28
+#define SYS_sleep  29
