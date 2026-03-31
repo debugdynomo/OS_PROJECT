@@ -12,6 +12,12 @@ struct proc proc[NPROC];
 
 struct proc *initproc;
 
+struct {
+	int value;
+	int full;
+	struct spinlock lock;
+} msgbox;
+
 int nextpid = 1;
 struct spinlock pid_lock;
 
@@ -56,6 +62,9 @@ procinit(void)
       p->state = UNUSED;
       p->kstack = KSTACK((int) (p - proc));
   }
+
+  initlock(&msgbox.lock,"msgbox");
+  msgbox.full = 0;
 }
 
 // Must be called with interrupts disabled,
