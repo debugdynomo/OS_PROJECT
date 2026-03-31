@@ -95,6 +95,47 @@ sys_kill(void)
   return kkill(pid);
 }
 
+uint64
+sys_send(void)
+{
+	int val;
+	argint(0, &val);
+
+	acquire(&msgbox.lock);
+
+	while(msgbox.full == 1)
+		sleep(&msgbox, &msgbox.lock);
+
+	msgbox.value = val;
+	msgbox.full = 1;
+
+	wakeup(&msgbox);
+
+	release(&msgbox.lock);
+
+	return 0;
+}
+
+uint64
+sys_recv(void)
+{
+	int val;
+	
+	acquire(&msgbox.lock);
+
+	while(msgbox.full == 0)
+		sleep(&msgbox, &msgbox.lock);
+	
+	val = msgbox.value;
+	msgbox.full = 0;
+
+	wakeup(&msgbox);
+
+	release(&msgbox.lock);
+
+	return val;
+}
+
 // return how many clock tick interrupts have occurred
 // since start.
 uint64
