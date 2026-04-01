@@ -245,20 +245,6 @@ initlock(&msgbox.lock,"msgbox");
 msgbox.full = 0;
 ```
 
-### `kernel/proc.h`
-- Declared `struct msgbox`  
-- Added `extern` declaration for global access  
-
-```c
-struct msgbox {
-    int value;
-    int full;
-    struct spinlock lock;
-};
-
-extern struct msgbox msgbox;
-```
-
 ### `kernel/syscall.h`
 - Added syscall numbers for:
   - `send`
