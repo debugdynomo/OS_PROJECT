@@ -3,18 +3,19 @@ An Operating System project based on XV6 that involves implementing and modifyin
 
 ## 📌 Overview
 
-This repository contains our Operating Systems projects based on the xv6 OS.
+This repository contains our Operating Systems projects based on the xv6 OS.  
 Each project focuses on implementing and understanding core OS concepts.
 
 ---
 
 ## 👨‍💻 Team Members
 
-* Name: VISHNU TEJA VASAM   
-* Name:
-* Name:
-* Name:
-* Name:
+* VISHNU TEJA VASAM
+* Member 2
+* Member 3
+* Member 4
+* Member 5
+* Member 6
 
 ---
 
@@ -24,24 +25,108 @@ Each project focuses on implementing and understanding core OS concepts.
 
 **Folder:** `G22_Project1_xv6_CustomizeSystemCalls`
 
-**Objective:**
-Modify and add new system calls in xv6 to understand kernel-user interaction.
+---
 
-**System Calls Implemented:**
+## 🎯 Objective
 
-* 1. ---
-* 2. ---
-* 3. ---
-* 4. ---
-* 5. ---
+Modify and add new system calls in xv6 to understand kernel-user interaction, synchronization, and process management.
 
-**Description of Changes:**
+---
 
-* ---
-* ---
-* ---
-* ---
-* ---
+# ⚙️ System Calls Implemented (Member-wise)
+
+---
+
+## 👤 VISHNU TEJA VASAM
+
+### 🔹 System Calls:
+- `send(int value)`
+- `recv(void)`
+- `sleep(int ticks)`
+
+### 🔹 Description:
+- Implemented IPC using message passing with a single-slot kernel buffer.
+- Used spinlocks to ensure mutual exclusion.
+- Eliminated busy waiting using sleep-wakeup mechanism.
+- Implemented `sleep` syscall using timer ticks and scheduler.
+- Demonstrated parent-child communication using `fork()`.
+
+---
+
+## 👤 Member 2
+
+### 🔹 System Calls:
+- ---
+- ---
+
+### 🔹 Description:
+- ---
+- ---
+- ---
+
+---
+
+## 👤 Member 3
+
+### 🔹 System Calls:
+- ---
+- ---
+
+### 🔹 Description:
+- ---
+- ---
+- ---
+
+---
+
+## 👤 Member 4
+
+### 🔹 System Calls:
+- ---
+- ---
+
+### 🔹 Description:
+- ---
+- ---
+- ---
+
+---
+
+## 👤 Member 5
+
+### 🔹 System Calls:
+- ---
+- ---
+
+### 🔹 Description:
+- ---
+- ---
+- ---
+
+---
+
+## 👤 Member 6
+
+### 🔹 System Calls:
+- ---
+- ---
+
+### 🔹 Description:
+- ---
+- ---
+- ---
+
+---
+
+# 🧠 Key Concepts Covered
+
+- System Calls  
+- Kernel ↔ User Interaction  
+- Process Creation (`fork`)  
+- Inter-Process Communication (IPC)  
+- Synchronization (Spinlocks, Sleep/Wakeup)  
+- Scheduler & Blocking Mechanisms  
+- Timer Interrupts  
 
 ---
 
