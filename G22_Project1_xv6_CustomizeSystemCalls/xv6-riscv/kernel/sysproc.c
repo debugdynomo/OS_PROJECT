@@ -107,3 +107,58 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+struct spinlock ulock;
+int ulocks[10];
+
+void
+ulockinit(void)
+{
+  initlock(&ulock, "ulock");
+  for(int i = 0; i < 10; i++)
+    ulocks[i] = 0;
+}
+
+uint64
+sys_initlock_6(void)
+{
+  return 0;
+}
+
+uint64
+sys_acquire_6(void)
+{
+  int id;
+
+  argint(0, &id);
+  if(id < 0 || id >= 10)
+    return -1;
+
+  acquire(&ulock);
+  while(ulocks[id] == 1){
+    sleep(&ulocks[id], &ulock);
+  }
+  ulocks[id] = 1;
+  release(&ulock);
+
+  return 0;
+}
+
+uint64
+sys_release_6(void)
+{
+  int id;
+
+  argint(0, &id);
+  if(id < 0 || id >= 10)
+    return -1;
+
+  acquire(&ulock);
+  if(ulocks[id] == 1){
+    ulocks[id] = 0;
+    wakeup(&ulocks[id]);
+  }
+  release(&ulock);
+
+  return 0;
+}
