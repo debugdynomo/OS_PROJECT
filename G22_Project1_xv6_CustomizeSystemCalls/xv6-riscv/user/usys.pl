@@ -42,3 +42,6 @@ entry("getpid");
 entry("sbrk");
 entry("pause");
 entry("uptime");
+entry("initlock_6");
+entry("acquire_6");
+entry("release_6");
