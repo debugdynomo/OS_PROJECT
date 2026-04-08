@@ -24,6 +24,7 @@ int getpid(void);
 char* sys_sbrk(int,int);
 int pause(int);
 int uptime(void);
+int fork_stats_25(int priority, int max_children);
 
 // ulib.c
 int stat(const char*, struct stat*);

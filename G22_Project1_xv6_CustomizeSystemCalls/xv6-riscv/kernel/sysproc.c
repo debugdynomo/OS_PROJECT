@@ -107,3 +107,59 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+struct fork_stats {
+  int attempts;
+  int successful;
+  int blocked;
+};
+
+static struct fork_stats fstats_25 = {0,0,0};
+
+uint64
+sys_fork_stats_25(void)
+{
+  int priority, max_children;
+  struct proc *p = myproc();
+  int children = 0;
+
+  argint(0, &priority);
+  argint(1, &max_children);
+
+  fstats_25.attempts++;
+
+  struct proc *pp;
+  extern struct proc proc[];
+  for(pp = proc; pp < &proc[NPROC]; pp++) {
+    if(pp->parent == p && pp->state != UNUSED) {
+      children++;
+    }
+  }
+
+  if(children >= max_children) {
+    fstats_25.blocked++;
+    printf("fork_stats_25: BLOCKED attempts=%d successful=%d blocked=%d\n",
+           fstats_25.attempts, fstats_25.successful, fstats_25.blocked);
+    return -1;
+  }
+
+  int pid = kfork();
+
+  if(pid < 0){
+    fstats_25.blocked++;
+    printf("fork_stats_25: FAILED attempts=%d successful=%d blocked=%d\n",
+           fstats_25.attempts, fstats_25.successful, fstats_25.blocked);
+    return -1;
+  }
+
+  if(pid == 0){
+    myproc()->priority = priority;
+  }
+
+  fstats_25.successful++;
+
+  printf("fork_stats_25: attempts=%d successful=%d blocked=%d\n",
+         fstats_25.attempts, fstats_25.successful, fstats_25.blocked);
+  
+  return pid;       
+}
