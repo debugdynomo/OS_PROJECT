@@ -1,0 +1,18 @@
+# Build artifacts
+*.o
+*.exe
+file_manager
+
+# Log output (generated at runtime)
+logs/*.log
+
+# Editor / OS junk
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Build error logs
+*.log
+!src/**
