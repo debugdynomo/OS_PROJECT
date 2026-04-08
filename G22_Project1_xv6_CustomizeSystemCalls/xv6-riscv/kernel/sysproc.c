@@ -107,3 +107,21 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+// ===== Sai: getchildcount (24) =====
+uint64
+sys_getchildcount(void)
+{
+  struct proc *p = myproc();
+  struct proc *pp;
+  int count = 0;
+
+  extern struct proc proc[NPROC];
+
+  for(pp = proc; pp < &proc[NPROC]; pp++){
+    if(pp->parent == p){
+      count++;
+    }
+  }
+  return count;
+}
