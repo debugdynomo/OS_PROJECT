@@ -1,0 +1,34 @@
+This is a larger test file for stress-testing concurrent file operations.
+It contains multiple lines to make read/write/copy operations more visible.
+
+=== Section 1: Operating System Concepts ===
+An operating system acts as an intermediary between users and hardware.
+Process management involves creation, scheduling, and termination of processes.
+Threads are lightweight processes that share the same address space.
+Synchronization primitives include mutexes, semaphores, and condition variables.
+
+=== Section 2: Multithreading ===
+Multithreading allows concurrent execution within a single process.
+POSIX threads (pthreads) are the standard threading API on Unix systems.
+A reader-writer lock allows multiple concurrent readers OR one exclusive writer.
+Deadlock prevention requires careful ordering of lock acquisition.
+
+=== Section 3: File Systems ===
+File systems organize data on storage devices into files and directories.
+Common operations include create, read, write, delete, and rename.
+File metadata includes size, timestamps, ownership, and permissions.
+Concurrent file access requires synchronization to prevent corruption.
+
+=== Section 4: Signals ===
+Signals are software interrupts delivered to a process.
+SIGINT is sent when the user presses Ctrl+C.
+Signal handlers must use only async-signal-safe functions.
+The sigaction() function provides reliable signal handling.
+
+=== Section 5: Compression ===
+Data compression reduces file size by eliminating redundancy.
+zlib provides general-purpose compression using the DEFLATE algorithm.
+gzip is a common file format that uses zlib internally.
+Compressed files save disk space and reduce transfer time.
+
+End of large test file.
