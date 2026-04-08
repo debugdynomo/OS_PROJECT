@@ -1,15 +1,4 @@
-/*
- * main.c — Interactive CLI Menu & Thread Dispatcher
- * Owner: Member 1 (VISHNU TEJA VASAM)
- *
- * This is the entry point of the Multithreaded File Manager.
- * It displays a menu, collects user input, spawns threads for
- * each operation, and tracks them for graceful shutdown.
- * -------------------------------------------------------------------
- * DO NOT MODIFY this file without coordinating with Member 1.
- */
-
-#define _GNU_SOURCE   /* for pthread extensions if available */
+#define _GNU_SOURCE
 
 #include "common.h"
 #include "sync.h"
@@ -17,13 +6,6 @@
 #include "logger.h"
 #include "file_ops.h"
 #include "compression.h"
-
-/* ── Active-thread counter ─────────────────────────────────────── */
-/*
- * Threads are created detached — they free themselves on exit.
- * We use an atomic counter + condition variable so the main
- * thread can wait for all operations to finish during shutdown.
- */
 
 static int             active_threads = 0;
 static pthread_mutex_t counter_mutex  = PTHREAD_MUTEX_INITIALIZER;
@@ -45,10 +27,6 @@ static void decrement_active(void)
     pthread_mutex_unlock(&counter_mutex);
 }
 
-/*
- * Wrapper that runs the real thread function then decrements
- * the active counter.
- */
 typedef struct {
     void *(*func)(void *);
     void  *arg;
@@ -61,15 +39,11 @@ static void *thread_wrapper(void *raw)
     void  *arg            = wa->arg;
     free(wa);
 
-    func(arg);            /* run the actual operation */
-    decrement_active();   /* signal completion        */
+    func(arg);
+    decrement_active();
     return NULL;
 }
 
-/*
- * Spawn a detached thread that runs `func(arg)`.
- * Wraps it so the active-thread counter is decremented on exit.
- */
 static int spawn_thread(void *(*func)(void *), void *arg)
 {
     wrapper_arg_t *wa = malloc(sizeof(wrapper_arg_t));
@@ -87,7 +61,7 @@ static int spawn_thread(void *(*func)(void *), void *arg)
     pthread_attr_destroy(&attr);
 
     if (rc != 0) {
-        fprintf(stderr, "[main] pthread_create failed: %s\n", strerror(rc));
+        fprintf(stderr, "pthread_create failed: %s\n", strerror(rc));
         decrement_active();
         free(wa);
         return -1;
@@ -95,46 +69,37 @@ static int spawn_thread(void *(*func)(void *), void *arg)
     return 0;
 }
 
-/*
- * Wait for ALL active threads to finish (blocking).
- * Used during shutdown.
- */
 static void wait_all_threads(void)
 {
     pthread_mutex_lock(&counter_mutex);
-    printf("[main] Waiting for %d active thread(s) to finish...\n",
-           active_threads);
+    printf("Waiting for %d active thread(s) to finish...\n", active_threads);
     while (active_threads > 0)
         pthread_cond_wait(&counter_cond, &counter_mutex);
     pthread_mutex_unlock(&counter_mutex);
-    printf("[main] All threads finished.\n");
+    printf("All threads finished.\n");
 }
-
-/* ── Menu ──────────────────────────────────────────────────────── */
 
 static void print_menu(void)
 {
     printf("\n");
-    printf("╔══════════════════════════════════════════════╗\n");
-    printf("║     MULTITHREADED FILE MANAGEMENT SYSTEM     ║\n");
-    printf("╠══════════════════════════════════════════════╣\n");
-    printf("║  1. Read File                                ║\n");
-    printf("║  2. Write to File                            ║\n");
-    printf("║  3. Delete File                              ║\n");
-    printf("║  4. Rename File                              ║\n");
-    printf("║  5. Copy File                                ║\n");
-    printf("║  6. Display File Metadata                    ║\n");
-    printf("║  7. Compress File (gzip)                     ║\n");
-    printf("║  8. Decompress File (gzip)                   ║\n");
-    printf("║  9. View Log File                            ║\n");
-    printf("║ 10. Exit                                     ║\n");
-    printf("╚══════════════════════════════════════════════╝\n");
+    printf("================================================\n");
+    printf("     MULTITHREADED FILE MANAGEMENT SYSTEM       \n");
+    printf("================================================\n");
+    printf("  1. Read File                                  \n");
+    printf("  2. Write to File                              \n");
+    printf("  3. Delete File                                \n");
+    printf("  4. Rename File                                \n");
+    printf("  5. Copy File                                  \n");
+    printf("  6. Display File Metadata                      \n");
+    printf("  7. Compress File (gzip)                       \n");
+    printf("  8. Decompress File (gzip)                     \n");
+    printf("  9. View Log File                              \n");
+    printf(" 10. Exit                                       \n");
+    printf("================================================\n");
     printf("  Active threads: %d\n", active_threads);
     printf("  Enter choice: ");
     fflush(stdout);
 }
-
-/* ── Input helpers ─────────────────────────────────────────────── */
 
 static void read_line(const char *prompt, char *buf, int size)
 {
@@ -144,13 +109,10 @@ static void read_line(const char *prompt, char *buf, int size)
         buf[0] = '\0';
         return;
     }
-    /* Strip trailing newline */
     size_t len = strlen(buf);
     if (len > 0 && buf[len - 1] == '\n')
         buf[len - 1] = '\0';
 }
-
-/* ── Operation dispatchers ─────────────────────────────────────── */
 
 static void do_read(void)
 {
@@ -162,7 +124,7 @@ static void do_read(void)
         free(arg);
         return;
     }
-    printf("  → Thread spawned for READ.\n");
+    printf("  -> Thread spawned for READ.\n");
 }
 
 static void do_write(void)
@@ -177,14 +139,13 @@ static void do_write(void)
     arg->append = (mode[0] == 'a' || mode[0] == 'A') ? 1 : 0;
 
     read_line("  Enter content: ", arg->content, BUFFER_SIZE);
-    /* Add a newline so each write is on its own line */
     strncat(arg->content, "\n", BUFFER_SIZE - strlen(arg->content) - 1);
 
     if (spawn_thread(thread_write_file, arg) != 0) {
         free(arg);
         return;
     }
-    printf("  → Thread spawned for WRITE.\n");
+    printf("  -> Thread spawned for WRITE.\n");
 }
 
 static void do_delete(void)
@@ -197,7 +158,7 @@ static void do_delete(void)
         free(arg);
         return;
     }
-    printf("  → Thread spawned for DELETE.\n");
+    printf("  -> Thread spawned for DELETE.\n");
 }
 
 static void do_rename(void)
@@ -211,7 +172,7 @@ static void do_rename(void)
         free(arg);
         return;
     }
-    printf("  → Thread spawned for RENAME.\n");
+    printf("  -> Thread spawned for RENAME.\n");
 }
 
 static void do_copy(void)
@@ -225,7 +186,7 @@ static void do_copy(void)
         free(arg);
         return;
     }
-    printf("  → Thread spawned for COPY.\n");
+    printf("  -> Thread spawned for COPY.\n");
 }
 
 static void do_metadata(void)
@@ -238,7 +199,7 @@ static void do_metadata(void)
         free(arg);
         return;
     }
-    printf("  → Thread spawned for METADATA.\n");
+    printf("  -> Thread spawned for METADATA.\n");
 }
 
 static void do_compress(void)
@@ -251,7 +212,7 @@ static void do_compress(void)
         free(arg);
         return;
     }
-    printf("  → Thread spawned for COMPRESS.\n");
+    printf("  -> Thread spawned for COMPRESS.\n");
 }
 
 static void do_decompress(void)
@@ -264,12 +225,11 @@ static void do_decompress(void)
         free(arg);
         return;
     }
-    printf("  → Thread spawned for DECOMPRESS.\n");
+    printf("  -> Thread spawned for DECOMPRESS.\n");
 }
 
 static void do_view_logs(void)
 {
-    /* This runs synchronously — just read and print the log file */
     FILE *fp = fopen(LOG_FILE_PATH, "r");
     if (!fp) {
         printf("  No log file found at '%s'.\n", LOG_FILE_PATH);
@@ -284,31 +244,22 @@ static void do_view_logs(void)
     fclose(fp);
 }
 
-/* ── Main ──────────────────────────────────────────────────────── */
-
 int main(void)
 {
-    /* 1. Set up signal handlers */
     setup_signal_handlers();
 
-    /* 2. Initialise subsystems */
     lock_table_init();
     if (logger_init(LOG_FILE_PATH) != 0) {
-        fprintf(stderr, "[main] WARNING: logger failed to initialise.\n");
+        fprintf(stderr, "Warning: logger initialization failed.\n");
     }
 
-    log_operation("SYSTEM", "—", "START", "Multithreaded File Manager started");
+    log_operation("SYSTEM", "-", "START", "Started");
 
-    printf("\n  Welcome to the Multithreaded File Manager!\n");
-    printf("  Built with pthreads, rwlocks, and signals.\n");
-
-    /* 3. Main event loop */
     while (!g_shutdown) {
         print_menu();
 
         char input[16];
         if (fgets(input, sizeof(input), stdin) == NULL) {
-            /* EOF or interrupted — treat as exit */
             break;
         }
 
@@ -331,17 +282,15 @@ int main(void)
             printf("  Invalid choice. Try again.\n");
         }
 
-        /* Give threads a moment to print output before menu redraws */
-        usleep(100000);   /* 100 ms */
+        usleep(100000);
     }
 
-    /* 4. Graceful shutdown */
-    printf("\n[main] Shutting down...\n");
+    printf("\nShutting down...\n");
     wait_all_threads();
-    log_operation("SYSTEM", "—", "STOP", "Multithreaded File Manager stopped");
+    log_operation("SYSTEM", "-", "STOP", "Stopped");
     logger_close();
     lock_table_destroy();
 
-    printf("[main] Goodbye!\n");
+    printf("Done.\n");
     return 0;
 }

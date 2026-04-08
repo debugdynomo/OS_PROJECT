@@ -1,15 +1,3 @@
-/*
- * copy_metadata.c — File Copying & Metadata Display
- * Owner: Member 4
- *
- * ╔══════════════════════════════════════════════════════════════╗
- * ║  STUB — Compiles and runs, but prints "not implemented".   ║
- * ║  Member 4: Replace the function bodies with your real      ║
- * ║  implementations. Use sync.h for locking, logger.h for     ║
- * ║  logging.                                                   ║
- * ╚══════════════════════════════════════════════════════════════╝
- */
-
 #include "file_ops.h"
 #include "common.h"
 #include "sync.h"
@@ -23,14 +11,12 @@ void *thread_copy_file(void *arg)
 
     log_operation("COPY", ca->src_path, "START", detail);
 
-    /* Read-lock source, write-lock destination */
     if (file_read_lock(ca->src_path) != 0) {
-        log_operation("COPY", ca->src_path, "FAILURE", "Lock failed (source)");
+        log_operation("COPY", ca->src_path, "FAILURE", "Lock failed");
         free(ca);
         return NULL;
     }
 
-    /* ── Member 4: implement file copy here ────────────────── */
     FILE *src = fopen(ca->src_path, "rb");
     if (!src) {
         log_operation("COPY", ca->src_path, "FAILURE", strerror(errno));
@@ -52,7 +38,7 @@ void *thread_copy_file(void *arg)
     size_t n;
     while ((n = fread(buf, 1, sizeof(buf), src)) > 0) {
         if (fwrite(buf, 1, n, dst) != n) {
-            log_operation("COPY", ca->dst_path, "FAILURE", "Write error during copy");
+            log_operation("COPY", ca->dst_path, "FAILURE", "Write error");
             fclose(src);
             fclose(dst);
             file_unlock(ca->src_path);
@@ -63,8 +49,7 @@ void *thread_copy_file(void *arg)
 
     fclose(src);
     fclose(dst);
-    /* ── End Member 4 section ───────────────────────────────── */
-
+    
     file_unlock(ca->src_path);
     log_operation("COPY", ca->dst_path, "SUCCESS", detail);
 
@@ -84,7 +69,6 @@ void *thread_display_metadata(void *arg)
         return NULL;
     }
 
-    /* ── Member 4: implement metadata display here ─────────── */
     struct stat st;
     if (stat(fa->filepath, &st) != 0) {
         log_operation("METADATA", fa->filepath, "FAILURE", strerror(errno));
@@ -100,7 +84,6 @@ void *thread_display_metadata(void *arg)
     printf("  Last modified : %s", ctime(&st.st_mtime));
     printf("  Last changed  : %s", ctime(&st.st_ctime));
     printf("--- End metadata ---\n\n");
-    /* ── End Member 4 section ───────────────────────────────── */
 
     file_unlock(fa->filepath);
     log_operation("METADATA", fa->filepath, "SUCCESS", NULL);

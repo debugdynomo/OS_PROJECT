@@ -1,15 +1,3 @@
-/*
- * compression.c — File Compression & Decompression
- * Owner: Member 6
- *
- * ╔══════════════════════════════════════════════════════════════╗
- * ║  STUB — Compiles and runs, but prints "not implemented".   ║
- * ║  Member 6: Replace the function bodies with your real      ║
- * ║  implementations using zlib (gzopen, gzwrite, gzread).     ║
- * ║  Link with -lz.                                             ║
- * ╚══════════════════════════════════════════════════════════════╝
- */
-
 #include "compression.h"
 #include "common.h"
 #include "sync.h"
@@ -28,8 +16,6 @@ void *thread_compress_file(void *arg)
         return NULL;
     }
 
-    /* ── Member 6: implement gzip compression here ─────────── */
-    /* Build output path: filepath + ".gz" */
     char out_path[MAX_PATH_LEN];
     snprintf(out_path, sizeof(out_path), "%s.gz", fa->filepath);
 
@@ -65,7 +51,6 @@ void *thread_compress_file(void *arg)
 
     fclose(src);
     gzclose(gz);
-    /* ── End Member 6 section ───────────────────────────────── */
 
     file_unlock(fa->filepath);
 
@@ -89,8 +74,6 @@ void *thread_decompress_file(void *arg)
         return NULL;
     }
 
-    /* ── Member 6: implement gzip decompression here ───────── */
-    /* Build output path: strip trailing .gz */
     char out_path[MAX_PATH_LEN];
     strncpy(out_path, fa->filepath, MAX_PATH_LEN - 1);
     out_path[MAX_PATH_LEN - 1] = '\0';
@@ -99,7 +82,6 @@ void *thread_decompress_file(void *arg)
     if (len > 3 && strcmp(out_path + len - 3, ".gz") == 0) {
         out_path[len - 3] = '\0';
     } else {
-        /* If it doesn't end in .gz, append .out */
         snprintf(out_path, sizeof(out_path), "%s.out", fa->filepath);
     }
 
@@ -135,7 +117,6 @@ void *thread_decompress_file(void *arg)
 
     fclose(dst);
     gzclose(gz);
-    /* ── End Member 6 section ───────────────────────────────── */
 
     file_unlock(fa->filepath);
 
