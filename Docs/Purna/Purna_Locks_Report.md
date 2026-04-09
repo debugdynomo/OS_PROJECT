@@ -24,4 +24,3 @@ Below is the output when the `lock_test_6` program is executed from the xv6 shel
 
 ![Screenshot of Execution](./execution_screenshot.png)
 
-*(Note: Use `make qemu` and run `lock_test_6` inside the xv6 shell to capture and place `execution_screenshot.jpg` next to this file)*
