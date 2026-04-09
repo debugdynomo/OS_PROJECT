@@ -7,6 +7,8 @@
 #include "proc.h"
 #include "vm.h"
 
+int shared_value = 0;
+
 uint64
 sys_exit(void)
 {
@@ -106,4 +108,17 @@ sys_uptime(void)
   xticks = ticks;
   release(&tickslock);
   return xticks;
+}
+uint64 sys_sharedmem(void) {
+    int value;
+    argint(0, &value);
+
+    if(value == -1){
+        // read
+        return shared_value;
+    } else {
+        // write
+        shared_value = value;
+        return 0;
+    }
 }
