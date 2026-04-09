@@ -14,13 +14,13 @@ main(int argc, char *argv[])
     printf("Child: trying to acquire lock 0\n");
     acquire_6(0);
     printf("Child: acquired lock 0. Doing work...\n");
-    sleep(10); // simulate work 
+    pause(10); // simulate work 
     printf("Child: releasing lock 0\n");
     release_6(0);
     exit(0);
   } else {
     // Parent process context
-    sleep(2); // give child time to acquire
+    pause(2); // give child time to acquire
     printf("Parent: trying to acquire lock 0 (should wait)\n");
     acquire_6(0);
     printf("Parent: acquired lock 0. Lock system works!\n");
