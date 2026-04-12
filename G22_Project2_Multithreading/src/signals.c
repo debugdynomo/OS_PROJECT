@@ -1,5 +1,6 @@
 #include "signals.h"
 #include "common.h"
+#include <signal.h>
 
 volatile sig_atomic_t g_shutdown = 0;
 
@@ -13,14 +14,8 @@ static void sigint_handler(int sig)
 
 void setup_signal_handlers(void)
 {
-    struct sigaction sa;
-
-    memset(&sa, 0, sizeof(sa));
-    sa.sa_handler = sigint_handler;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = 0;
-    sigaction(SIGINT, &sa, NULL);
-
-    sa.sa_handler = SIG_IGN;
-    sigaction(SIGPIPE, &sa, NULL);
+    signal(SIGINT, sigint_handler);
+#ifdef SIGPIPE
+    signal(SIGPIPE, SIG_IGN);
+#endif
 }
