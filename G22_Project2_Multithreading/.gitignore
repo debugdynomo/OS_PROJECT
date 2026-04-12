@@ -16,3 +16,6 @@ Thumbs.db
 # Build error logs
 *.log
 !src/**
+test
+*.o
+log.txt
