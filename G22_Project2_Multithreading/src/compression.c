@@ -16,7 +16,7 @@ void *thread_compress_file(void *arg)
         return NULL;
     }
 
-    char out_path[MAX_PATH_LEN];
+    char out_path[MAX_PATH_LEN + 4];
     snprintf(out_path, sizeof(out_path), "%s.gz", fa->filepath);
 
     FILE *src = fopen(fa->filepath, "rb");
@@ -74,7 +74,7 @@ void *thread_decompress_file(void *arg)
         return NULL;
     }
 
-    char out_path[MAX_PATH_LEN];
+    char out_path[MAX_PATH_LEN + 5];
     strncpy(out_path, fa->filepath, MAX_PATH_LEN - 1);
     out_path[MAX_PATH_LEN - 1] = '\0';
 

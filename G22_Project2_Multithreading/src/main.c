@@ -95,6 +95,7 @@ static void print_menu(void)
     printf("  8. Decompress File (gzip)                     \n");
     printf("  9. View Log File                              \n");
     printf(" 10. Exit                                       \n");
+    printf(" 11. Demonstrate Multithreading (Auto Test)     \n");
     printf("================================================\n");
     printf("  Active threads: %d\n", active_threads);
     printf("  Enter choice: ");
@@ -228,6 +229,36 @@ static void do_decompress(void)
     printf("  -> Thread spawned for DECOMPRESS.\n");
 }
 
+static void do_demonstrate_multithreading(void)
+{
+    printf("\n  [Demo] Spawning 5 reader threads and 2 writer threads concurrently...\n");
+    
+    // Spawn reader threads
+    for (int i = 0; i < 5; i++) {
+        file_arg_t *r_arg = malloc(sizeof(file_arg_t));
+        if (r_arg) {
+            strncpy(r_arg->filepath, "test_files/sample.txt", MAX_PATH_LEN - 1);
+            r_arg->filepath[MAX_PATH_LEN - 1] = '\0';
+            spawn_thread(thread_read_file, r_arg);
+        }
+    }
+    
+    // Spawn writer threads
+    for (int i = 0; i < 2; i++) {
+        write_arg_t *w_arg = malloc(sizeof(write_arg_t));
+        if (w_arg) {
+            strncpy(w_arg->filepath, "test_files/sample.txt", MAX_PATH_LEN - 1);
+            w_arg->filepath[MAX_PATH_LEN - 1] = '\0';
+            w_arg->append = 1;
+            strncpy(w_arg->content, "Demo write thread!\n", BUFFER_SIZE - 1);
+            w_arg->content[BUFFER_SIZE - 1] = '\0';
+            spawn_thread(thread_write_file, w_arg);
+        }
+    }
+    
+    printf("  [Demo] Threads spawned! Watch the active threads count and output.\n");
+}
+
 static void do_view_logs(void)
 {
     FILE *fp = fopen(LOG_FILE_PATH, "r");
@@ -278,6 +309,7 @@ int main(void)
         case 10:
             g_shutdown = 1;
             break;
+        case 11: do_demonstrate_multithreading(); break;
         default:
             printf("  Invalid choice. Try again.\n");
         }

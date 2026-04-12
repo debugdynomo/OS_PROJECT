@@ -7,6 +7,17 @@ static pthread_mutex_t log_mutex = PTHREAD_MUTEX_INITIALIZER;
 int logger_init(const char *log_file_path)
 {
     pthread_mutex_lock(&log_mutex);
+
+    // Create the logs directory if the path contains a directory
+    char tmp_path[256];
+    strncpy(tmp_path, log_file_path, sizeof(tmp_path) - 1);
+    tmp_path[sizeof(tmp_path) - 1] = '\0';
+    char *slash = strrchr(tmp_path, '/');
+    if (slash) {
+        *slash = '\0';
+        mkdir(tmp_path, 0777); // sys/stat.h included via common.h
+    }
+
     log_fp = fopen(log_file_path, "a");
     if (!log_fp) {
         pthread_mutex_unlock(&log_mutex);
@@ -33,9 +44,6 @@ void log_operation(const char *operation, const char *filepath, const char *stat
                 time_buf, (unsigned long)tid, operation, filepath, status, det);
         fflush(log_fp);
     }
-
-    fprintf(stderr, "[%s] [TID:%lu] [%s] %s - %s - %s\n",
-            time_buf, (unsigned long)tid, operation, filepath, status, det);
 
     pthread_mutex_unlock(&log_mutex);
 }

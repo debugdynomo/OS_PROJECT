@@ -1,10 +1,5 @@
-Hello, this is a sample test file for the Multithreaded File Manager.
-
-Line 1: The quick brown fox jumps over the lazy dog.
-Line 2: pthreads provide POSIX-compliant threading.
-Line 3: Reader-writer locks allow concurrent reads.
-Line 4: Mutex ensures exclusive access for writers.
-Line 5: Proper synchronization prevents data corruption.
-Line 6: This file is used to test concurrent read operations.
-Line 7: Multiple threads should be able to read this simultaneously.
-Line 8: End of sample file.
+This is a sample test file for multithreading.
+Demo write thread!
+Demo write thread!
+Demo write thread!
+Demo write thread!
