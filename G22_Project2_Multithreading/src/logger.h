@@ -6,3 +6,13 @@ void log_operation(const char *operation, const char *filepath, const char *stat
 void logger_close(void);
 
 #endif
+void logger_init(const char *log_file);
+
+void log_operation(const char *operation,
+                   const char *filename,
+                   const char *status,
+                   const char *details);
+
+void logger_close(void);
+
+#endif 
