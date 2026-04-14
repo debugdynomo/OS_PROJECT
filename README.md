@@ -19,7 +19,7 @@ Each project focuses on implementing and understanding core OS concepts.
 * SAI TEJA
 * Member 4
 * Member 5
-* Member 6
+* VENNELA PURNA CHANDRA
 
 ---
 
