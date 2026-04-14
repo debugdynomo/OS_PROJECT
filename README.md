@@ -15,14 +15,9 @@ Each project focuses on implementing and understanding core OS concepts.
 ## 👨‍💻 Team Members
 
 * VISHNU TEJA VASAM
-<<<<<<< HEAD
 * VEM SAI PRATHIK REDDY
 * SAI TEJA
-=======
 * VISHESH
-* Member 3
->>>>>>> a83e088 (updated readme and removed docs)
-* Member 4
 * Member 5
 * VENNELA PURNA CHANDRA
 
@@ -62,7 +57,6 @@ Modify and add new system calls in xv6 to understand kernel-user interaction, sy
 
 ---
 
-<<<<<<< HEAD
 ## 👤 VEM SAI PRATHIK REDDY
 
 ### 🔹 System Calls:
@@ -102,18 +96,6 @@ Modify and add new system calls in xv6 to understand kernel-user interaction, sy
 
 ---
 
-## 👤 Member 4
-
-### 🔹 System Calls:
-- ---
-- ---
-
-### 🔹 Description:
-- ---
-- ---
-- ---
-
----
 
 ## 👤 Member 5
 
