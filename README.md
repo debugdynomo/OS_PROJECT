@@ -110,16 +110,19 @@ Modify and add new system calls in xv6 to understand kernel-user interaction, sy
 
 ---
 
-## 👤 Member 6
+## 👤 VENNELA PURNA CHANDRA
 
 ### 🔹 System Calls:
-- ---
-- ---
+- `initlock_6()`
+- `acquire_6(lock_id)`
+- `release_6(lock_id)`
 
 ### 🔹 Description:
-- ---
-- ---
-- ---
+- Designed user-level process synchronization primitives to coordinate execution across multiple processes.
+- Added a global array of locks (`int ulocks[10]`) synchronized by a kernel struct spinlock.
+- `acquire_6(lock_id)` requests a lock and puts the caller to sleep if held, efficiently avoiding busy-waiting.
+- `release_6(lock_id)` successfully releases the lock and wakes up waiting processes.
+- Created and successfully validated process coordination via the remote application `lock_test_6.c`.
 
 
 ---
