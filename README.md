@@ -18,7 +18,7 @@ Each project focuses on implementing and understanding core OS concepts.
 * VEM SAI PRATHIK REDDY
 * SAI TEJA
 * VISHESH
-* Member 5
+* AKSHARA
 * VENNELA PURNA CHANDRA
 
 ---
