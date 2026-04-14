@@ -6,6 +6,10 @@ An Operating System project based on XV6 that involves implementing and modifyin
 This repository contains our Operating Systems projects based on the xv6 OS.  
 Each project focuses on implementing and understanding core OS concepts.
 
+### 🌿 Branching Information
+- **Project 1**: Each team member worked on their own isolated branch. These branches were **not merged** into `main`. To view a member's individual work and documentation, please switch to their respective branch. (**feature/<`name`>**)
+- **Project 2**: Each team member initially worked in their own separate branch, and all individual contributions have been combined and merged into the **`project2-final`** branch.  (**project2-<`name`>**)
+
 ---
 
 ## 👨‍💻 Team Members
@@ -117,17 +121,6 @@ Modify and add new system calls in xv6 to understand kernel-user interaction, sy
 - ---
 - ---
 
----
-
-# 🧠 Key Concepts Covered
-
-- System Calls  
-- Kernel ↔ User Interaction  
-- Process Creation (`fork`)  
-- Inter-Process Communication (IPC)  
-- Synchronization (Spinlocks, Sleep/Wakeup)  
-- Scheduler & Blocking Mechanisms  
-- Timer Interrupts  
 
 ---
 
@@ -136,23 +129,27 @@ Modify and add new system calls in xv6 to understand kernel-user interaction, sy
 **Folder:** `G22_Project2_Multithreading`
 
 **Objective:**
-Implement multithreading support in xv6.
+Implement a multithreaded file management system in C using POSIX threads (`pthreads`). It is a standalone Linux/WSL program that provides an interactive CLI for performing common file operations concurrently.
 
-**Features Implemented:**
+**Key Features:**
+- **9 Core Operations**: Read, Write, Delete, Rename, Copy, Metadata, Compress (zlib), Decompress, Logging.
+- **Thread-safe**: Per-file reader-writer locks prevent data races.
+- **Deadlock-free**: Alphabetical lock ordering prevents deadlocks during rename operations.
+- **Graceful Shutdown**: `SIGINT` handler ensures active threads safely finish their operations before exiting.
 
-* ---
-* ---
-* ---
-
-**Description of Changes:**
-
-* ---
-* ---
-* ---
+**Team Contributions:**
+- **Vishnu**: Core Architecture, Synchronization (File Lock Table), CLI menu, Thread dispatching.
+- **Pratik**: Concurrent File Reading & Exclusive File Writing.
+- **Akshara**: File Deletion & Deadlock-free File Renaming.
+- **Vishesh**: File Copying & Metadata Display.
+- **Saiteja**: Thread-safe Error Handling & Logging subsystem.
+- **Purna**: File Compression & Decompression using zlib.
 
 ---
 
 ## ⚙️ How to Run
+
+### Project 1: System Call Customization
 
 ```bash
 # Navigate to project folder
@@ -162,22 +159,29 @@ cd G22_Project1_xv6_CustomizeSystemCalls/xv6-riscv
 make qemu
 ```
 
+### Project 2: Multithreaded File Management System
+
+**Prerequisites:** Linux/WSL, GCC (`-pthread`), zlib (`-lz`).  
+*(To install zlib on Debian/Ubuntu: `sudo apt-get install zlib1g-dev`)*
+
+```bash
+# Navigate to project folder
+cd G22_Project2_Multithreading
+
+# Build the project
+make clean
+make
+
+# Run the application
+make run
+# or
+./file_manager
+```
+
 ---
 
 ## 📄 Documentation
 
-Detailed explanations and screenshots are available in the `docs/` folder of each project.
+Detailed explanations and screenshots are available in the `docs/` folder of each project and in the respective team members' branches.
 
----
 
-## 🔀 Contributions
-
-Each team member worked on different parts of the project.
-Pull requests include detailed descriptions of individual contributions.
-
----
-
-## 📝 Notes
-
-* Based on xv6 (RISC-V version)
-* Educational project for understanding OS internals
