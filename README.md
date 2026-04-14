@@ -11,7 +11,7 @@ Each project focuses on implementing and understanding core OS concepts.
 ## 👨‍💻 Team Members
 
 * VISHNU TEJA VASAM
-* Member 2
+* VEM SAI PRATHIK REDDY
 * Member 3
 * Member 4
 * Member 5
@@ -53,16 +53,17 @@ Modify and add new system calls in xv6 to understand kernel-user interaction, sy
 
 ---
 
-## 👤 Member 2
+## 👤 VEM SAI PRATHIK REDDY
 
 ### 🔹 System Calls:
-- ---
-- ---
+- `fork_stats_25(int priority, int max_children)`
 
 ### 🔹 Description:
-- ---
-- ---
-- ---
+- Extended traditional `fork()` with priority assignment and child process limiting.
+- Tracks process creation statistics including attempts, successful forks, and blocked forks.
+- Blocks fork requests when `max_children` limit is reached and returns `-1`.
+- Priority level is assigned directly to child process struct upon creation.
+- Demonstrated all features through a dedicated test program `testprathik.c`.
 
 ---
 
