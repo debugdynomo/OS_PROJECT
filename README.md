@@ -12,7 +12,7 @@ Each project focuses on implementing and understanding core OS concepts.
 
 * VISHNU TEJA VASAM
 * VEM SAI PRATHIK REDDY
-* Sai Teja
+* SAI TEJA
 * Member 4
 * Member 5
 * Member 6
