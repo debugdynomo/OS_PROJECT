@@ -96,17 +96,19 @@ Modify and add new system calls in xv6 to understand kernel-user interaction, sy
 
 ---
 
-
-## 👤 Member 5
+## 👤 AKSHARA
 
 ### 🔹 System Calls:
-- ---
-- ---
+- `sharedmem()`
 
 ### 🔹 Description:
-- ---
-- ---
-- ---
+- Implemented a system call to enable shared memory between processes in xv6.
+- Allows multiple processes to access a common memory region for efficient communication.
+- Reduces overhead compared to traditional inter-process communication methods.
+- Ensures controlled access to shared memory to maintain system stability.
+- Demonstrated functionality using a user-level test program.
+
+---
 
 ---
 
