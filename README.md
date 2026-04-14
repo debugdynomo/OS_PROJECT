@@ -15,8 +15,13 @@ Each project focuses on implementing and understanding core OS concepts.
 ## 👨‍💻 Team Members
 
 * VISHNU TEJA VASAM
+<<<<<<< HEAD
 * VEM SAI PRATHIK REDDY
 * SAI TEJA
+=======
+* VISHESH
+* Member 3
+>>>>>>> a83e088 (updated readme and removed docs)
 * Member 4
 * Member 5
 * VENNELA PURNA CHANDRA
@@ -57,6 +62,7 @@ Modify and add new system calls in xv6 to understand kernel-user interaction, sy
 
 ---
 
+<<<<<<< HEAD
 ## 👤 VEM SAI PRATHIK REDDY
 
 ### 🔹 System Calls:
@@ -70,6 +76,18 @@ Modify and add new system calls in xv6 to understand kernel-user interaction, sy
 - Demonstrated all features through a dedicated test program `testprathik.c`.
 
 ---
+## 👤 VISHESH
+
+### 🔹 System Calls:
+- `clone(void(*fcn)(void*, void*), void *arg1, void *arg2, void *stack)` 
+- `join(void **stack)`
+
+### 🔹 Description:
+- Implemented kernel-supported multithreading by introducing the `clone` system call to create lightweight processes (threads).
+- Ensured threads share the same address space (`pagetable`), file descriptors, and open files as the parent process.
+- Implemented the `join` system call to allow parent processes to wait for thread termination and safely reclaim allocated stack and memory resources.
+- Modified process creation and teardown routines (`allocproc`, `freeproc`, `exit`) to correctly handle shared memory structures without premature deallocation.
+- Developed user-level concurrency primitives (such as spinlocks or mutexes) using atomic instructions to prevent race conditions during shared memory access.
 
 ## 👤 Sai Teja
 
