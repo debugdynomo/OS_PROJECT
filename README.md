@@ -12,7 +12,7 @@ Each project focuses on implementing and understanding core OS concepts.
 
 * VISHNU TEJA VASAM
 * VEM SAI PRATHIK REDDY
-* Member 3
+* Sai Teja
 * Member 4
 * Member 5
 * Member 6
@@ -67,16 +67,16 @@ Modify and add new system calls in xv6 to understand kernel-user interaction, sy
 
 ---
 
-## 👤 Member 3
+## 👤 Sai Teja
 
 ### 🔹 System Calls:
-- ---
-- ---
+- `getchildcount(void)`
 
 ### 🔹 Description:
-- ---
-- ---
-- ---
+- Implemented a system call to count the number of child processes of the current process.
+- Traverses the process table in xv6 to identify child processes.
+- Returns the total number of child processes.
+- Helps in understanding process hierarchy and parent-child relationships in OS.
 
 ---
 
